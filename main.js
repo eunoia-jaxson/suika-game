@@ -82,7 +82,7 @@ const addFruit = () => {
     render: {
       sprite: { texture: `${fruit.name}.png` },
     },
-    restitution: 0.2,
+    restitution: 0.3,
   });
 
   currentBody = body;
@@ -144,9 +144,10 @@ Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
     if (collision.bodyA.index === collision.bodyB.index) {
       const index = collision.bodyA.index;
-      // if (index === FRUITS_BASE.length - 1) {
-      //   return;
-      // }
+      if (index === FRUITS_BASE.length - 1) {
+        score += 66;
+        updateScore();
+      }
 
       World.remove(world, [collision.bodyA, collision.bodyB]);
 
