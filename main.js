@@ -80,7 +80,7 @@ const addFruit = () => {
     render: {
       sprite: { texture: `${fruit.name}.png` },
     },
-    restitution: 0.3,
+    restitution: 0.5,
   });
 
   currentBody = body;
