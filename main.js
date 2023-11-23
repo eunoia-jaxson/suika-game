@@ -49,10 +49,12 @@ let interval = null;
 let numSuika = 0;
 let score = 0;
 let nextIndex = Math.floor(Math.random() * 5);
+const highestScore = localStorage.getItem("highest");
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
 const scoreElement = document.getElementById("score");
+const highestElement = document.getElementById("highest");
 
 console.log(nextElement);
 
@@ -62,6 +64,10 @@ const updateScore = () => {
 
 const nextFruit = () => {
   nextElement.src = FRUITS_BASE[nextIndex].name + ".png";
+};
+
+const updateHighest = () => {
+  highestElement.textContent = highestScore;
 };
 
 const addFruit = () => {
@@ -170,6 +176,9 @@ Events.on(engine, "collisionStart", (event) => {
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")
     ) {
       alert("Game over");
+      if (highestScore < score) {
+        localStorage.setItem("highest", `${score}`);
+      }
       location.reload();
     }
 
@@ -179,6 +188,7 @@ Events.on(engine, "collisionStart", (event) => {
   });
 });
 
+updateHighest();
 updateScore();
 nextFruit();
 addFruit();
