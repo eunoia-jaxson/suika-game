@@ -47,6 +47,14 @@ let currentFruit = null;
 let disableAction = false;
 let interval = null;
 let numSuika = 0;
+let score = 0;
+
+// 목표 위치의 요소를 가져옴
+const scoreElement = document.getElementById("score");
+
+const updateScore = () => {
+  scoreElement.textContent = score;
+};
 
 const addFruit = () => {
   const index = Math.floor(Math.random() * 5);
@@ -139,6 +147,9 @@ Events.on(engine, "collisionStart", (event) => {
 
       World.add(world, newBody);
 
+      score += newFruit.score;
+      updateScore();
+
       if (newFruit === FRUITS_BASE[10]) {
         numSuika += 1;
       }
@@ -158,4 +169,5 @@ Events.on(engine, "collisionStart", (event) => {
   });
 });
 
+updateScore();
 addFruit();
