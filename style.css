@@ -94,3 +94,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
