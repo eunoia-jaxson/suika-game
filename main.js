@@ -48,16 +48,26 @@ let disableAction = false;
 let interval = null;
 let numSuika = 0;
 let score = 0;
+let nextIndex = Math.floor(Math.random() * 5);
 
 // 목표 위치의 요소를 가져옴
+const nextElement = document.getElementById("next");
 const scoreElement = document.getElementById("score");
+
+console.log(nextElement);
 
 const updateScore = () => {
   scoreElement.textContent = score;
 };
 
+const nextFruit = () => {
+  nextElement.src = FRUITS_BASE[nextIndex].name + ".png";
+};
+
 const addFruit = () => {
-  const index = Math.floor(Math.random() * 5);
+  const index = nextIndex;
+  nextIndex = Math.floor(Math.random() * 5);
+  nextFruit();
   const fruit = FRUITS_BASE[index];
 
   const body = Bodies.circle(300, 50, fruit.radius, {
@@ -163,11 +173,12 @@ Events.on(engine, "collisionStart", (event) => {
       location.reload();
     }
 
-    if (numSuika === 2) {
+    /* if (numSuika === 2) {
       alert("Clear!!!");
-    }
+    } */
   });
 });
 
 updateScore();
+nextFruit();
 addFruit();
