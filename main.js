@@ -56,8 +56,6 @@ const nextElement = document.getElementById("next");
 const scoreElement = document.getElementById("score");
 const highestElement = document.getElementById("highest");
 
-console.log(nextElement);
-
 const updateScore = () => {
   scoreElement.textContent = score;
 };
