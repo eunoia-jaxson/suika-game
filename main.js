@@ -42,6 +42,8 @@ World.add(world, [leftWall, rightWall, ground, topLine]);
 Render.run(render);
 Runner.run(engine);
 
+document.body.style.overflow = "hidden";
+
 let currentBody = null;
 let currentFruit = null;
 let disableAction = false;
@@ -119,6 +121,41 @@ window.onkeydown = (event) => {
 
     case "KeyS":
       clearInterval(interval);
+      interval = null;
+      currentBody.isSleeping = false;
+      disableAction = true;
+
+      setTimeout(() => {
+        addFruit();
+        disableAction = false;
+      }, 1000);
+      break;
+
+    case "ArrowLeft":
+      if (interval) return;
+      interval = setInterval(() => {
+        if (currentBody.position.x - currentFruit.radius > 30)
+          Body.setPosition(currentBody, {
+            x: currentBody.position.x - 1,
+            y: currentBody.position.y,
+          });
+      }, 5);
+      break;
+
+    case "ArrowRight":
+      if (interval) return;
+      interval = setInterval(() => {
+        if (currentBody.position.x + currentFruit.radius < 590)
+          Body.setPosition(currentBody, {
+            x: currentBody.position.x + 1,
+            y: currentBody.position.y,
+          });
+      }, 5);
+      break;
+
+    case "ArrowDown":
+      clearInterval(interval);
+      interval = null;
       currentBody.isSleeping = false;
       disableAction = true;
 
@@ -134,6 +171,8 @@ window.onkeyup = (event) => {
   switch (event.code) {
     case "KeyA":
     case "KeyD":
+    case "ArrowLeft":
+    case "ArrowRight":
       clearInterval(interval);
       interval = null;
   }
