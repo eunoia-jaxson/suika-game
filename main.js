@@ -90,9 +90,9 @@ const addFruit = () => {
 };
 
 window.onkeydown = (event) => {
-  if (disableAction) {
-    return;
-  }
+  if (disableAction) return;
+
+  console.log(event.code);
 
   switch (event.code) {
     case "KeyA":
@@ -118,6 +118,7 @@ window.onkeydown = (event) => {
       break;
 
     case "KeyS":
+      clearInterval(interval);
       currentBody.isSleeping = false;
       disableAction = true;
 
