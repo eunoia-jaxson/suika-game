@@ -1,5 +1,5 @@
 import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
-import { FRUITS_BASE } from "./fruits";
+import { BALLS_BASE } from "./\bballs";
 
 const engine = Engine.create();
 const render = Render.create({
@@ -45,7 +45,7 @@ Runner.run(engine);
 document.body.style.overflow = "hidden";
 
 let currentBody = null;
-let currentFruit = null;
+let currentBall = null;
 let disableAction = false;
 let interval = null;
 let numSuika = 0;
@@ -62,31 +62,31 @@ const updateScore = () => {
   scoreElement.textContent = score;
 };
 
-const nextFruit = () => {
-  nextElement.src = FRUITS_BASE[nextIndex].name + ".png";
+const nextBall = () => {
+  nextElement.src = BALLS_BASE[nextIndex].name + ".png";
 };
 
 const updateHighest = () => {
   highestElement.textContent = highestScore;
 };
 
-const addFruit = () => {
+const addBall = () => {
   const index = nextIndex;
   nextIndex = Math.floor(Math.random() * 5);
-  nextFruit();
-  const fruit = FRUITS_BASE[index];
+  nextBall();
+  const ball = BALLS_BASE[index];
 
-  const body = Bodies.circle(300, 50, fruit.radius, {
+  const body = Bodies.circle(300, 50, ball.radius, {
     index: index,
     isSleeping: true,
     render: {
-      sprite: { texture: `${fruit.name}.png` },
+      sprite: { texture: `${ball.name}.png` },
     },
     restitution: 0.3,
   });
 
   currentBody = body;
-  currentFruit = fruit;
+  currentBall = ball;
 
   World.add(world, body);
 };
@@ -100,7 +100,7 @@ window.onkeydown = (event) => {
     case "KeyA":
       if (interval) return;
       interval = setInterval(() => {
-        if (currentBody.position.x - currentFruit.radius > 30)
+        if (currentBody.position.x - currentBall.radius > 30)
           Body.setPosition(currentBody, {
             x: currentBody.position.x - 1,
             y: currentBody.position.y,
@@ -111,7 +111,7 @@ window.onkeydown = (event) => {
     case "KeyD":
       if (interval) return;
       interval = setInterval(() => {
-        if (currentBody.position.x + currentFruit.radius < 590)
+        if (currentBody.position.x + currentBall.radius < 590)
           Body.setPosition(currentBody, {
             x: currentBody.position.x + 1,
             y: currentBody.position.y,
@@ -126,7 +126,7 @@ window.onkeydown = (event) => {
       disableAction = true;
 
       setTimeout(() => {
-        addFruit();
+        addBall();
         disableAction = false;
       }, 1000);
       break;
@@ -134,7 +134,7 @@ window.onkeydown = (event) => {
     case "ArrowLeft":
       if (interval) return;
       interval = setInterval(() => {
-        if (currentBody.position.x - currentFruit.radius > 30)
+        if (currentBody.position.x - currentBall.radius > 30)
           Body.setPosition(currentBody, {
             x: currentBody.position.x - 1,
             y: currentBody.position.y,
@@ -145,7 +145,7 @@ window.onkeydown = (event) => {
     case "ArrowRight":
       if (interval) return;
       interval = setInterval(() => {
-        if (currentBody.position.x + currentFruit.radius < 590)
+        if (currentBody.position.x + currentBall.radius < 590)
           Body.setPosition(currentBody, {
             x: currentBody.position.x + 1,
             y: currentBody.position.y,
@@ -160,7 +160,7 @@ window.onkeydown = (event) => {
       disableAction = true;
 
       setTimeout(() => {
-        addFruit();
+        addBall();
         disableAction = false;
       }, 1000);
       break;
@@ -182,30 +182,30 @@ Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
     if (collision.bodyA.index === collision.bodyB.index) {
       const index = collision.bodyA.index;
-      if (index === FRUITS_BASE.length - 1) {
+      if (index === BALLS_BASE.length - 1) {
         score += 66;
         updateScore();
       }
 
       World.remove(world, [collision.bodyA, collision.bodyB]);
 
-      const newFruit = FRUITS_BASE[index + 1];
+      const newBall = BALLS_BASE[index + 1];
       const newBody = Bodies.circle(
         collision.collision.supports[0].x,
         collision.collision.supports[0].y,
-        newFruit.radius,
+        newBall.radius,
         {
-          render: { sprite: { texture: `${newFruit.name}.png` } },
+          render: { sprite: { texture: `${newBall.name}.png` } },
           index: index + 1,
         }
       );
 
       World.add(world, newBody);
 
-      score += newFruit.score;
+      score += newBall.score;
       updateScore();
 
-      if (newFruit === FRUITS_BASE[10]) {
+      if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
       }
     }
@@ -215,6 +215,7 @@ Events.on(engine, "collisionStart", (event) => {
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")
     ) {
       alert("Game over");
+      disableAction = true;
       if (highestScore < score) {
         localStorage.setItem("highest", `${score}`);
       }
@@ -229,5 +230,5 @@ Events.on(engine, "collisionStart", (event) => {
 
 updateHighest();
 updateScore();
-nextFruit();
-addFruit();
+nextBall();
+addBall();

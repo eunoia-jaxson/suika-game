@@ -2,37 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/base/10_watermelon.png" />
+    <link rel="icon" type="image/png" href="/base/10_bowling.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Suika Game - スイカゲーム</title>
+    <title>Drop the Ball</title>
     <script
       defer
       src="https://cdn.swygbro.com/public/widget/swyg-widget.js"
     ></script>
     <meta
       name="description"
-      content="작은 과일들을 합쳐 큰 수박을 만들어 보세요."
+      content="작은 공들을 합쳐 큰 볼링공을 만들어 보세요."
     />
-    <meta name="keywords" content="과일, 수박, 게임" />
-    <meta name="og:site_name" content="Suika Game" />
-    <meta name="og:title" content="Suika Game" />
+    <meta name="keywords" content="공, 볼링, 윌슨, 게임" />
+    <meta name="og:site_name" content="Ball Game" />
+    <meta name="og:title" content="Ball Game" />
     <meta
       name="og:description"
-      content="작은 과일들을 합쳐 큰 수박을 만들어 보세요."
+      content="작은 공들을 합쳐 큰 볼링공을 만들어 보세요."
     />
     <meta name="og:type" content="website" />
     <meta name="og:url" content="https://suika-game.swygbro.com" />
-    <meta
-      name="og:image"
-      content="https://www.swygbro.com/_next/image?url=https%3A%2F%2Fcdn.swygbro.com%2Fprojects%2Fcea49687-2098-4adb-895e-1460ea0d6ada%2Fconfig%2Fthumbnail%2F10_watermelon.png&w=2048&q=75"
-    />
+    <meta name="og:image" content="/thumbnail.png" />
     <meta name="twitter:title" content="Suika Game" />
     <!-- IOS -->
-    <link rel="apple-touch-icon" href="/base/10_watermelon.png" />
+    <link rel="apple-touch-icon" href="/base/10_bowling.png" />
 
     <!-- ANDROID -->
-    <link rel="shortcut icon" href="/base/10_watermelon.png" />
+    <link rel="shortcut icon" href="/base/10_bowling.png" />
   </head>
   <body style="padding: 10px 20px">
     <div class="container">
@@ -52,14 +49,15 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
       <div>
-        <h1>スイカゲーム</h1>
-        <pre>Use A, S, D or ←, ↓, →  to control the fruit.</pre>
-        <h3>다음 과일</h3>
-        <img id="next" alt="Next Fruit" />
+        <h1>Drop the Ball</h1>
+        <pre>Use A, S, D or ←, ↓, →  to control the ball.</pre>
+        <h3>다음 공</h3>
+        <img id="next" alt="Next Ball" />
         <h3>점수</h3>
         <p id="score"></p>
         <h3>최고 점수</h3>
         <p id="highest"></p>
+        <img src="flowchart.png" alt="flowchart" width="300" />
       </div>
       <div />
       <script type="module" src="/main.js"></script>
