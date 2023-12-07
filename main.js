@@ -1,5 +1,5 @@
 import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
-import { BALLS_BASE } from "./\bballs";
+import { BALLS_BASE } from "./balls";
 
 const engine = Engine.create();
 const render = Render.create({
