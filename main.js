@@ -7,7 +7,7 @@ const render = Render.create({
   element: document.body,
   options: {
     wireframes: false,
-    background: "#F7F4C8",
+    background: "#EDE9FA",
     width: 620,
     height: 850,
   },
@@ -17,24 +17,28 @@ const world = engine.world;
 
 const leftWall = Bodies.rectangle(15, 395, 30, 790, {
   isStatic: true,
-  render: { fillStyle: "#E6B143" },
+  render: { fillStyle: "#8E41F1" },
 });
 
 const rightWall = Bodies.rectangle(605, 395, 30, 790, {
   isStatic: true,
-  render: { fillStyle: "#E6B143" },
+  render: { fillStyle: "#808FF7" },
 });
+
+const gradient = render.context.createLinearGradient(0, 0, 620, 0);
+gradient.addColorStop(1021 / 10000, "#8E41F1");
+gradient.addColorStop(9067 / 10000, "#808FF7");
 
 const ground = Bodies.rectangle(310, 820, 620, 60, {
   isStatic: true,
-  render: { fillStyle: "#E6B143" },
+  render: { fillStyle: gradient },
 });
 
 const topLine = Bodies.rectangle(310, 150, 620, 2, {
   name: "topLine",
   isStatic: true,
   isSensor: true,
-  render: { fillStyle: "#E6B143" },
+  render: { fillStyle: gradient },
 });
 
 World.add(world, [leftWall, rightWall, ground, topLine]);
