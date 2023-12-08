@@ -55,7 +55,7 @@ let interval = null;
 let numSuika = 0;
 let score = 0;
 let collisionId = 0;
-let nextIndex = /* Math.floor(Math.random() * 5) */ 4;
+let nextIndex = Math.floor(Math.random() * 5);
 const highestScore = localStorage.getItem("highest");
 
 // 목표 위치의 요소를 가져옴
@@ -77,7 +77,7 @@ const updateHighest = () => {
 
 const addBall = () => {
   const index = nextIndex;
-  nextIndex = /* Math.floor(Math.random() * 5) */ 4;
+  nextIndex = Math.floor(Math.random() * 5);
   nextBall();
   const ball = BALLS_BASE[index];
 
