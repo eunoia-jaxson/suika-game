@@ -54,7 +54,8 @@ let disableAction = false;
 let interval = null;
 let numSuika = 0;
 let score = 0;
-let nextIndex = Math.floor(Math.random() * 5);
+let collisionId = 0;
+let nextIndex = /* Math.floor(Math.random() * 5) */ 4;
 const highestScore = localStorage.getItem("highest");
 
 // 목표 위치의 요소를 가져옴
@@ -76,7 +77,7 @@ const updateHighest = () => {
 
 const addBall = () => {
   const index = nextIndex;
-  nextIndex = Math.floor(Math.random() * 5);
+  nextIndex = /* Math.floor(Math.random() * 5) */ 4;
   nextBall();
   const ball = BALLS_BASE[index];
 
@@ -97,8 +98,6 @@ const addBall = () => {
 
 window.onkeydown = (event) => {
   if (disableAction) return;
-
-  console.log(event.code);
 
   switch (event.code) {
     case "KeyA":
@@ -184,6 +183,8 @@ window.onkeyup = (event) => {
 
 Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
+    if (collisionId === collision.bodyB.id) return;
+
     if (collision.bodyA.index === collision.bodyB.index) {
       const index = collision.bodyA.index;
       if (index === BALLS_BASE.length - 1) {
@@ -212,6 +213,8 @@ Events.on(engine, "collisionStart", (event) => {
       if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
       }
+
+      collisionId = collision.bodyB.id;
     }
 
     if (
