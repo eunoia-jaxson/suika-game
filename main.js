@@ -73,6 +73,7 @@ const nextBall = () => {
 
 const updateHighest = () => {
   highestElement.textContent = highestScore;
+  if (highestScore < score) highestElement.textContent = score;
 };
 
 const addBall = () => {
@@ -190,6 +191,7 @@ Events.on(engine, "collisionStart", (event) => {
       if (index === BALLS_BASE.length - 1) {
         score += 66;
         updateScore();
+        updateHighest();
       }
 
       World.remove(world, [collision.bodyA, collision.bodyB]);
@@ -209,6 +211,7 @@ Events.on(engine, "collisionStart", (event) => {
 
       score += newBall.score;
       updateScore();
+      updateHighest();
 
       if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
