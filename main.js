@@ -310,7 +310,7 @@ Events.on(engine, "collisionStart", (event) => {
         updateHighest();
       }
 
-      if (newBall === BALLS_BASE[5]) {
+      if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
       }
 
