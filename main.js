@@ -334,9 +334,6 @@ Events.on(engine, "collisionStart", (event) => {
       currentTime.setSeconds(seconds);
       currentTime.setMilliseconds(milliseconds);
 
-      console.log(currentTime);
-      console.log(fastestTime);
-
       if (currentTime < fastestTime) {
         localStorage.setItem(
           "fastest",
