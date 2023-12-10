@@ -48,15 +48,36 @@
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
-      <div>
+      <div class="information">
         <h1>Drop the Ball</h1>
         <pre>Use A, S, D or ←, ↓, →  to control the ball.</pre>
-        <h3>다음 공</h3>
-        <img id="next" alt="Next Ball" />
-        <h3>점수</h3>
-        <p id="score"></p>
-        <h3>최고 점수</h3>
-        <p id="highest"></p>
+        <div class="modeBar">
+          <div class="toggle-switch" id="toggleSwitch">
+            <input type="checkbox" id="switchCheckbox" />
+            <label for="switchCheckbox"></label>
+          </div>
+          <label for="toggleSwitch"></label>
+        </div>
+        <div class="row">
+          <div class="information" id="scoreMode" style="display: none">
+            <h3>점수</h3>
+            <p id="score">0</p>
+            <h3>최고 점수</h3>
+            <p id="highestScore">0</p>
+          </div>
+          <div class="information" id="speedRunMode" style="display: none">
+            <h3>기록</h3>
+            <p id="record">00:00.00</p>
+            <h3>최고 기록</h3>
+            <p id="fastestRecord">00:00.00</p>
+          </div>
+          <div class="information">
+            <h3>다음 공</h3>
+            <div class="next">
+              <img id="next" alt="Next Ball" />
+            </div>
+          </div>
+        </div>
         <img src="flowchart.png" alt="flowchart" width="300" />
       </div>
       <div />

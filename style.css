@@ -44,5 +44,84 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.next {
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modeBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+}
+
+.disabled {
+  pointer-events: none; /* 사용자 입력 무효화 */
+  opacity: 0.5; /* 투명도 조절 */
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #8e41f1;
+  border-radius: 17px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.toggle-switch input:checked + label {
+  background-color: #808ff7; /* 켜진 상태의 배경색 */
+}
+
+.toggle-switch label::before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+  transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + label::before {
+  transform: translateX(26px);
 }

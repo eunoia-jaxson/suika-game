@@ -56,25 +56,83 @@ let numSuika = 0;
 let score = 0;
 let collisionId = 0;
 let nextIndex = Math.floor(Math.random() * 5);
+let timer;
+let isRunning = false;
+let milliseconds = 0;
+let seconds = 0;
+let minutes = 0;
 const highestScore = localStorage.getItem("highest");
+const fastestRecord = localStorage.getItem("fastest");
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
 const scoreElement = document.getElementById("score");
-const highestElement = document.getElementById("highest");
-
-const updateScore = () => {
-  scoreElement.textContent = score;
-};
+const highestElement = document.getElementById("highestScore");
+const toggleSwitch = document.getElementById("toggleSwitch");
+const switchCheckbox = document.getElementById("switchCheckbox");
+const labelForSwitch = document.querySelector('label[for="toggleSwitch"]');
+const scoreMode = document.getElementById("scoreMode");
+const speedRunMode = document.getElementById("speedRunMode");
+const recordElement = document.getElementById("record");
+const fastestElement = document.getElementById("fastestRecord");
+const modeBar = document.querySelector(".modeBar");
+switchCheckbox.checked = localStorage.getItem("mode") === "true";
 
 const nextBall = () => {
   nextElement.src = BALLS_BASE[nextIndex].name + ".png";
 };
 
+const updateScore = () => {
+  scoreElement.textContent = score;
+};
+
+function updateRecord() {
+  milliseconds++;
+  if (milliseconds === 100) {
+    milliseconds = 0;
+    seconds++;
+    if (seconds === 60) {
+      seconds = 0;
+      minutes++;
+    }
+  }
+
+  recordElement.textContent =
+    formatTime(minutes) +
+    ":" +
+    formatTime(seconds) +
+    "." +
+    formatTime(milliseconds);
+}
+
 const updateHighest = () => {
   highestElement.textContent = highestScore;
   if (highestScore < score) highestElement.textContent = score;
 };
+
+const updateFastest = () => {
+  fastestElement.textContent = fastestRecord;
+};
+
+function updateLabelContent() {
+  labelForSwitch.textContent = switchCheckbox.checked
+    ? "SpeedRun Mode"
+    : "Score Mode";
+}
+
+function updateContentVisibility() {
+  if (switchCheckbox.checked) {
+    speedRunMode.style.display = "block";
+    scoreMode.style.display = "none";
+  } else {
+    speedRunMode.style.display = "none";
+    scoreMode.style.display = "block";
+  }
+}
+
+function formatTime(time) {
+  return time < 10 ? "0" + time : time;
+}
 
 const addBall = () => {
   const index = nextIndex;
@@ -133,6 +191,20 @@ window.onkeydown = (event) => {
         addBall();
         disableAction = false;
       }, 1000);
+
+      if (world.bodies.length === 6) {
+        modeBar.classList.add("disabled");
+      }
+
+      if (switchCheckbox.checked) {
+        if (isRunning) {
+          return;
+        } else {
+          timer = setInterval(updateRecord, 10);
+        }
+
+        isRunning = true;
+      }
       break;
 
     case "ArrowLeft":
@@ -167,6 +239,20 @@ window.onkeydown = (event) => {
         addBall();
         disableAction = false;
       }, 1000);
+
+      if (world.bodies.length === 5) {
+        modeBar.classList.add("disabled");
+      }
+
+      if (switchCheckbox.checked) {
+        if (isRunning) {
+          return;
+        } else {
+          timer = setInterval(updateRecord, 10);
+        }
+
+        isRunning = true;
+      }
       break;
   }
 };
@@ -188,7 +274,7 @@ Events.on(engine, "collisionStart", (event) => {
 
     if (collision.bodyA.index === collision.bodyB.index) {
       const index = collision.bodyA.index;
-      if (index === BALLS_BASE.length - 1) {
+      if (!switchCheckbox.checked && index === BALLS_BASE.length - 1) {
         score += 66;
         updateScore();
         updateHighest();
@@ -209,9 +295,11 @@ Events.on(engine, "collisionStart", (event) => {
 
       World.add(world, newBody);
 
-      score += newBall.score;
-      updateScore();
-      updateHighest();
+      if (!switchCheckbox.checked) {
+        score += newBall.score;
+        updateScore();
+        updateHighest();
+      }
 
       if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
@@ -226,19 +314,39 @@ Events.on(engine, "collisionStart", (event) => {
     ) {
       alert("Game over");
       disableAction = true;
-      if (highestScore < score) {
+      if (!switchCheckbox.checked && highestScore < score) {
         localStorage.setItem("highest", `${score}`);
       }
       location.reload();
     }
 
-    /* if (numSuika === 2) {
+    if (switchCheckbox.checked && numSuika === 1) {
       alert("Clear!!!");
-    } */
+      localStorage.setItem(
+        "fastest",
+        `${
+          formatTime(minutes) +
+          ":" +
+          formatTime(seconds) +
+          "." +
+          formatTime(milliseconds)
+        }`
+      );
+      location.reload();
+    }
   });
 });
 
+toggleSwitch.addEventListener("click", function () {
+  switchCheckbox.checked = !switchCheckbox.checked;
+  localStorage.setItem("mode", switchCheckbox.checked);
+  updateLabelContent();
+  updateContentVisibility();
+});
+
+updateLabelContent();
+updateContentVisibility();
 updateHighest();
-updateScore();
+updateFastest();
 nextBall();
 addBall();
