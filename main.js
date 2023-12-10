@@ -54,7 +54,7 @@ if (localStorage.getItem("fastest") === null) {
   localStorage.setItem("fastest", "99:99.99");
 }
 if (localStorage.getItem("mode") === null) {
-  localStorage.setItem("mode", false);
+  localStorage.setItem("mode", "false");
 }
 
 let currentBody = null;
@@ -363,7 +363,7 @@ Events.on(engine, "collisionStart", (event) => {
 
 toggleSwitch.addEventListener("click", function () {
   switchCheckbox.checked = !switchCheckbox.checked;
-  localStorage.setItem("mode", switchCheckbox.checked);
+  localStorage.setItem("mode", `${switchCheckbox.checked}`);
   updateLabelContent();
   updateContentVisibility();
 });
