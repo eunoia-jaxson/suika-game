@@ -58,6 +58,7 @@ h1 {
 
 .next {
   display: flex;
+  width: 75px;
   height: 75px;
   justify-content: center;
   align-items: center;
