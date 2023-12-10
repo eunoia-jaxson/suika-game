@@ -321,7 +321,6 @@ Events.on(engine, "collisionStart", (event) => {
     }
 
     if (switchCheckbox.checked && numSuika === 1) {
-      alert("Clear!!!");
       localStorage.setItem(
         "fastest",
         `${
@@ -332,6 +331,7 @@ Events.on(engine, "collisionStart", (event) => {
           formatTime(milliseconds)
         }`
       );
+      alert("Clear!!!");
       location.reload();
     }
   });
