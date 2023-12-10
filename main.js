@@ -47,6 +47,15 @@ Render.run(render);
 Runner.run(engine);
 
 document.body.style.overflow = "hidden";
+if (localStorage.getItem("highest") === null) {
+  localStorage.setItem("highest", "0");
+}
+if (localStorage.getItem("fastest") === null) {
+  localStorage.setItem("fastest", "00:00.00");
+}
+if (localStorage.getItem("mode") === null) {
+  localStorage.setItem("mode", false);
+}
 
 let currentBody = null;
 let currentBall = null;
