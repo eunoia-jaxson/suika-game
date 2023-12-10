@@ -61,8 +61,17 @@ let isRunning = false;
 let milliseconds = 0;
 let seconds = 0;
 let minutes = 0;
+let fastestTime = new Date();
+let currentTime = new Date();
+fastestTime.setFullYear(1970, 0, 1);
+currentTime.setFullYear(1970, 0, 1);
+fastestTime.setHours(0);
+currentTime.setHours(0);
 const highestScore = localStorage.getItem("highest");
 const fastestRecord = localStorage.getItem("fastest");
+fastestTime.setMinutes(parseInt(fastestRecord.slice(0, 2)), 10);
+fastestTime.setSeconds(parseInt(fastestRecord.slice(3, 5)), 10);
+fastestTime.setMilliseconds(parseInt(fastestRecord.slice(6, 8)), 10);
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
@@ -301,7 +310,7 @@ Events.on(engine, "collisionStart", (event) => {
         updateHighest();
       }
 
-      if (newBall === BALLS_BASE[10]) {
+      if (newBall === BALLS_BASE[5]) {
         numSuika += 1;
       }
 
@@ -321,16 +330,25 @@ Events.on(engine, "collisionStart", (event) => {
     }
 
     if (switchCheckbox.checked && numSuika === 1) {
-      localStorage.setItem(
-        "fastest",
-        `${
-          formatTime(minutes) +
-          ":" +
-          formatTime(seconds) +
-          "." +
-          formatTime(milliseconds)
-        }`
-      );
+      currentTime.setMinutes(minutes);
+      currentTime.setSeconds(seconds);
+      currentTime.setMilliseconds(milliseconds);
+
+      console.log(currentTime);
+      console.log(fastestTime);
+
+      if (currentTime < fastestTime) {
+        localStorage.setItem(
+          "fastest",
+          `${
+            formatTime(minutes) +
+            ":" +
+            formatTime(seconds) +
+            "." +
+            formatTime(milliseconds)
+          }`
+        );
+      }
       alert("Clear!!!");
       location.reload();
     }
