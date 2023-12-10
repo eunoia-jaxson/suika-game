@@ -339,9 +339,9 @@ Events.on(engine, "collisionStart", (event) => {
     }
 
     if (switchCheckbox.checked && numSuika === 1) {
-      currentTime.setMinutes(minutes);
-      currentTime.setSeconds(seconds);
       currentTime.setMilliseconds(milliseconds);
+      currentTime.setSeconds(seconds);
+      currentTime.setMinutes(minutes);
 
       if (currentTime < fastestTime) {
         localStorage.setItem(
