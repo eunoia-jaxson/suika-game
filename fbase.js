@@ -26,12 +26,12 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAr6RL9VXmrwRF8ZuXRh9tChi_xC66GN1I",
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  authDomain: "drop-the-ball-9bf63.firebaseapp.com",
   projectId: "drop-the-ball-9bf63",
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+  storageBucket: "drop-the-ball-9bf63.appspot.com",
+  messagingSenderId: "766229072214",
+  appId: "1:766229072214:web:c359b563462fa60c4caef7",
+  measurementId: "G-CE655T4BQJ",
 };
 
 // Initialize Firebase
