@@ -25,7 +25,7 @@ import {
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
+  apiKey: "AIzaSyAr6RL9VXmrwRF8ZuXRh9tChi_xC66GN1I",
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
   projectId: "drop-the-ball-9bf63",
   storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
