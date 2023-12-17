@@ -1,10 +1,21 @@
 import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
 import { BALLS_BASE } from "./balls";
+import {
+  dbService,
+  collection,
+  orderBy,
+  limit,
+  query,
+  getDocs,
+  setDoc,
+  doc,
+  getDoc,
+} from "./fbase";
 
 const engine = Engine.create();
 const render = Render.create({
   engine,
-  element: document.body,
+  element: document.getElementById("canvas-container"),
   options: {
     wireframes: false,
     background: "#EDE9FA",
@@ -47,15 +58,43 @@ Render.run(render);
 Runner.run(engine);
 
 document.body.style.overflow = "hidden";
-if (localStorage.getItem("highest") === null) {
-  localStorage.setItem("highest", "0");
-}
-if (localStorage.getItem("fastest") === null) {
-  localStorage.setItem("fastest", "99:99.99");
-}
 if (localStorage.getItem("mode") === null) {
   localStorage.setItem("mode", "false");
 }
+
+getDocs(
+  query(collection(dbService, "scores"), orderBy("score", "desc"), limit(5))
+)
+  .then((querySnapshot) => {
+    querySnapshot.docs.forEach((doc, i) => {
+      const scoreElement = document.getElementById(`highScore-${i + 1}`);
+      scoreElement.textContent = `${i + 1} ${doc.id} ${doc.data().score}`;
+    });
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
+
+getDocs(query(collection(dbService, "records"), orderBy("record"), limit(5)))
+  .then((querySnapshot) => {
+    querySnapshot.docs.forEach((doc, i) => {
+      const scoreElement = document.getElementById(`highRecord-${i + 1}`);
+      const milliseconds = Math.floor((doc.data().record % 1000) / 10);
+      const totalSeconds = doc.data().record / 1000;
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = Math.floor(totalSeconds % 60);
+      const record =
+        formatTime(minutes) +
+        ":" +
+        formatTime(seconds) +
+        "." +
+        formatTime(milliseconds);
+      scoreElement.textContent = `${i + 1} ${doc.id} ${record}`;
+    });
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
 
 let currentBody = null;
 let currentBall = null;
@@ -65,22 +104,15 @@ let numSuika = 0;
 let score = 0;
 let collisionId = 0;
 let nextIndex = Math.floor(Math.random() * 5);
-let timer;
 let isRunning = false;
+let millisecond = 0;
 let milliseconds = 0;
 let seconds = 0;
 let minutes = 0;
-let fastestTime = new Date();
-let currentTime = new Date();
-fastestTime.setFullYear(1970, 0, 1);
-currentTime.setFullYear(1970, 0, 1);
-fastestTime.setHours(0);
-currentTime.setHours(0);
-const highestScore = localStorage.getItem("highest");
-const fastestRecord = localStorage.getItem("fastest");
-fastestTime.setMinutes(parseInt(fastestRecord.slice(0, 2)), 10);
-fastestTime.setSeconds(parseInt(fastestRecord.slice(3, 5)), 10);
-fastestTime.setMilliseconds(parseInt(fastestRecord.slice(6, 8)), 10);
+const scoreSnap = await getDoc(doc(dbService, "scores", "UserID"));
+const highestScore = scoreSnap.data().score;
+const recordSnap = await getDoc(doc(dbService, "records", "UserID"));
+const fastestRecord = recordSnap.data().record;
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
@@ -105,6 +137,7 @@ const updateScore = () => {
 };
 
 function updateRecord() {
+  millisecond += 10;
   milliseconds++;
   if (milliseconds === 100) {
     milliseconds = 0;
@@ -121,6 +154,7 @@ function updateRecord() {
     formatTime(seconds) +
     "." +
     formatTime(milliseconds);
+  console.log(millisecond);
 }
 
 const updateHighest = () => {
@@ -129,7 +163,17 @@ const updateHighest = () => {
 };
 
 const updateFastest = () => {
-  fastestElement.textContent = fastestRecord;
+  const milliseconds = Math.floor((fastestRecord % 1000) / 10);
+  const totalSeconds = fastestRecord / 1000;
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+  const record =
+    formatTime(minutes) +
+    ":" +
+    formatTime(seconds) +
+    "." +
+    formatTime(milliseconds);
+  fastestElement.textContent = record;
 };
 
 function updateLabelContent() {
@@ -218,7 +262,7 @@ window.onkeydown = (event) => {
         if (isRunning) {
           return;
         } else {
-          timer = setInterval(updateRecord, 10);
+          setInterval(updateRecord, 10);
         }
 
         isRunning = true;
@@ -266,7 +310,7 @@ window.onkeydown = (event) => {
         if (isRunning) {
           return;
         } else {
-          timer = setInterval(updateRecord, 10);
+          setInterval(updateRecord, 10);
         }
 
         isRunning = true;
@@ -287,7 +331,7 @@ window.onkeyup = (event) => {
 };
 
 Events.on(engine, "collisionStart", (event) => {
-  event.pairs.forEach((collision) => {
+  event.pairs.forEach(async (collision) => {
     if (collisionId === collision.bodyB.id) return;
 
     if (collision.bodyA.index === collision.bodyB.index) {
@@ -319,7 +363,7 @@ Events.on(engine, "collisionStart", (event) => {
         updateHighest();
       }
 
-      if (newBall === BALLS_BASE[10]) {
+      if (newBall === BALLS_BASE[7]) {
         numSuika += 1;
       }
 
@@ -330,30 +374,21 @@ Events.on(engine, "collisionStart", (event) => {
       !disableAction &&
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")
     ) {
-      alert("Game over");
-      disableAction = true;
       if (!switchCheckbox.checked && highestScore < score) {
-        localStorage.setItem("highest", `${score}`);
+        await setDoc(doc(dbService, "scores", "UserID"), {
+          score,
+        });
       }
+      disableAction = true;
+      alert("Game over");
       location.reload();
     }
 
     if (switchCheckbox.checked && numSuika === 1) {
-      currentTime.setMilliseconds(milliseconds);
-      currentTime.setSeconds(seconds);
-      currentTime.setMinutes(minutes);
-
-      if (currentTime < fastestTime) {
-        localStorage.setItem(
-          "fastest",
-          `${
-            formatTime(minutes) +
-            ":" +
-            formatTime(seconds) +
-            "." +
-            formatTime(milliseconds)
-          }`
-        );
+      if (millisecond < fastestRecord) {
+        await setDoc(doc(dbService, "records", "UserID"), {
+          record: millisecond,
+        });
       }
       alert("Clear!!!");
       location.reload();
