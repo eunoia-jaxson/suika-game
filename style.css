@@ -150,7 +150,8 @@ b {
   align-items: flex-start;
   gap: 10px;
   height: 100%;
-  margin-right: 50px;
+  width: 250px;
+  flex-wrap: nowrap;
 }
 
 .login {
