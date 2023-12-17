@@ -34,6 +34,16 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  font-size: 2em;
+}
+
+h3,
+b {
+  font-size: 1.3em;
+  white-space: pre;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -139,4 +149,34 @@ h1 {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  height: 100%;
+  margin-right: 50px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  width: 300px;
+  flex-wrap: nowrap;
+}
+
+#googleLogin {
+  display: flex;
+  align-items: center;
+  width: 414px;
+  height: 60px;
+  padding: 11px;
+  border-radius: 15px;
+  background-color: var(--Black, #000);
+  white-space: nowrap;
+  /* googleshadow1 */
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.17),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.08);
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 150%;
 }

@@ -13,7 +13,12 @@ import {
   where,
   getDoc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -46,4 +51,7 @@ export {
   doc,
   where,
   getDoc,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
 };

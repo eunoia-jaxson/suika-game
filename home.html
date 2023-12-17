@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Drop the Ball</title>
+    <script
+      defer
+      src="https://cdn.swygbro.com/public/widget/swyg-widget.js"
+    ></script>
+    <meta
+      name="description"
+      content="작은 공들을 합쳐 큰 볼링공을 만들어 보세요."
+    />
+    <meta name="keywords" content="공, 볼링, 윌슨, 게임" />
+    <meta property="og:site_name" content="Ball Game" />
+    <meta property="og:title" content="Ball Game" />
+    <meta
+      property="og:description"
+      content="작은 공들을 합쳐 큰 볼링공을 만들어 보세요."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://suika-game.swygbro.com" />
+    <meta property="og:image" content="/public/thumbnail.png" />
+    <meta name="twitter:title" content="Ball Game" />
+    <!-- IOS -->
+    <link rel="apple-touch-icon" href="/thumbnail_small.png" />
+
+    <!-- ANDROID -->
+    <link rel="shortcut icon" href="/thumbnail_small.png" />
+    <script>
+      const token = localStorage.getItem("token");
+      if (token === null) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "/";
+      }
+    </script>
+    <script type="module" src="logout.js"></script>
+    <script type="module" src="main.js"></script>
+  </head>
+  <body style="padding: 10px 20px">
+    <header>
+      <span id="userName"></span> |
+      <button id="logout" style="all: unset">로그아웃</button>
+    </header>
+    <main class="container">
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1919598055512436"
+        crossorigin="anonymous"
+      ></script>
+      <!-- contents/wide-skyscaper -->
+      <ins
+        class="adsbygoogle"
+        style="display: inline-block; width: 160px; height: 600px"
+        data-ad-client="ca-pub-1919598055512436"
+        data-ad-slot="1445482995"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+      <div class="information">
+        <h1>Drop the Ball</h1>
+        <pre>Use A, S, D or ←, ↓, →  to control the ball.</pre>
+        <div class="modeBar">
+          <div class="toggle-switch" id="toggleSwitch">
+            <input type="checkbox" id="switchCheckbox" />
+            <label for="switchCheckbox"></label>
+          </div>
+          <label for="toggleSwitch"></label>
+        </div>
+        <div class="row">
+          <div class="information" id="scoreMode" style="display: none">
+            <h3>점수</h3>
+            <p id="score">0</p>
+            <h3>최고 점수</h3>
+            <p id="highestScore">0</p>
+          </div>
+          <div class="information" id="speedRunMode" style="display: none">
+            <h3>기록</h3>
+            <p id="record">00:00.00</p>
+            <h3>최고 기록</h3>
+            <p id="fastestRecord">99:99.99</p>
+          </div>
+          <div class="information">
+            <h3>다음 공</h3>
+            <div class="next">
+              <img id="next" alt="Next Ball" />
+            </div>
+          </div>
+        </div>
+        <img src="flowchart.png" alt="flowchart" width="300" />
+      </div>
+      <div id="canvas-container"></div>
+      <div class="information">
+        <h2>Leader Board</h2>
+        <div id="scoreBoard" style="display: none">
+          <h3>최고 점수</h3>
+          <div class="leaderBoard">
+            <b id="highScore-1" style="color: #fdc500">1</b>
+            <b id="highScore-2" style="color: #c5c5c5">2</b>
+            <b id="highScore-3" style="color: #a76d60">3</b>
+            <b id="highScore-4">4</b>
+            <b id="highScore-5">5</b>
+          </div>
+        </div>
+        <div id="recordBoard" style="display: none">
+          <h3>최고 기록</h3>
+          <div class="leaderBoard">
+            <b id="highRecord-1" style="color: #fdc500">1</b>
+            <b id="highRecord-2" style="color: #c5c5c5">2</b>
+            <b id="highRecord-3" style="color: #a76d60">3</b>
+            <b id="highRecord-4">4</b>
+            <b id="highRecord-5">5</b>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1919598055512436"
+      crossorigin="anonymous"
+    ></script>
+    <!-- contents/responsive -->
+    <ins
+      class="adsbygoogle"
+      style="display: block"
+      data-ad-client="ca-pub-1919598055512436"
+      data-ad-slot="1197662171"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>

@@ -12,6 +12,10 @@ import {
   getDoc,
 } from "./fbase";
 
+const name = localStorage.getItem("user");
+const nameElement = document.getElementById("userName");
+nameElement.textContent = name;
+
 const engine = Engine.create();
 const render = Render.create({
   engine,
@@ -68,7 +72,9 @@ getDocs(
   .then((querySnapshot) => {
     querySnapshot.docs.forEach((doc, i) => {
       const scoreElement = document.getElementById(`highScore-${i + 1}`);
-      scoreElement.textContent = `${i + 1} ${doc.id} ${doc.data().score}`;
+      scoreElement.textContent = `${i + 1}   |   ${doc.data().score}   |   ${
+        doc.id
+      }`;
     });
   })
   .catch((error) => {
@@ -80,16 +86,15 @@ getDocs(query(collection(dbService, "records"), orderBy("record"), limit(5)))
     querySnapshot.docs.forEach((doc, i) => {
       const scoreElement = document.getElementById(`highRecord-${i + 1}`);
       const milliseconds = Math.floor((doc.data().record % 1000) / 10);
-      const totalSeconds = doc.data().record / 1000;
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = Math.floor(totalSeconds % 60);
+      const minutes = Math.floor(doc.data().record / 1000 / 60);
+      const seconds = Math.floor((doc.data().record / 1000) % 60);
       const record =
         formatTime(minutes) +
         ":" +
         formatTime(seconds) +
         "." +
         formatTime(milliseconds);
-      scoreElement.textContent = `${i + 1} ${doc.id} ${record}`;
+      scoreElement.textContent = `${i + 1}   |   ${record}   |   ${doc.id}`;
     });
   })
   .catch((error) => {
@@ -109,10 +114,12 @@ let millisecond = 0;
 let milliseconds = 0;
 let seconds = 0;
 let minutes = 0;
-const scoreSnap = await getDoc(doc(dbService, "scores", "UserID"));
-const highestScore = scoreSnap.data().score;
-const recordSnap = await getDoc(doc(dbService, "records", "UserID"));
-const fastestRecord = recordSnap.data().record;
+const scoreSnap = await getDoc(doc(dbService, "scores", name));
+const highestScore =
+  scoreSnap.data() === undefined ? 0 : scoreSnap.data().score;
+const recordSnap = await getDoc(doc(dbService, "records", name));
+const fastestRecord =
+  recordSnap.data() === undefined ? 5999999 : recordSnap.data().record;
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
@@ -123,6 +130,8 @@ const switchCheckbox = document.getElementById("switchCheckbox");
 const labelForSwitch = document.querySelector('label[for="toggleSwitch"]');
 const scoreMode = document.getElementById("scoreMode");
 const speedRunMode = document.getElementById("speedRunMode");
+const scoreBoard = document.getElementById("scoreBoard");
+const speedRunBoard = document.getElementById("recordBoard");
 const recordElement = document.getElementById("record");
 const fastestElement = document.getElementById("fastestRecord");
 const modeBar = document.querySelector(".modeBar");
@@ -154,7 +163,6 @@ function updateRecord() {
     formatTime(seconds) +
     "." +
     formatTime(milliseconds);
-  console.log(millisecond);
 }
 
 const updateHighest = () => {
@@ -164,9 +172,8 @@ const updateHighest = () => {
 
 const updateFastest = () => {
   const milliseconds = Math.floor((fastestRecord % 1000) / 10);
-  const totalSeconds = fastestRecord / 1000;
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.floor(totalSeconds % 60);
+  const minutes = Math.floor(fastestRecord / 60000);
+  const seconds = Math.floor((fastestRecord / 1000) % 60);
   const record =
     formatTime(minutes) +
     ":" +
@@ -186,9 +193,13 @@ function updateContentVisibility() {
   if (switchCheckbox.checked) {
     speedRunMode.style.display = "block";
     scoreMode.style.display = "none";
+    speedRunBoard.style.display = "block";
+    scoreBoard.style.display = "none";
   } else {
     speedRunMode.style.display = "none";
     scoreMode.style.display = "block";
+    speedRunBoard.style.display = "none";
+    scoreBoard.style.display = "block";
   }
 }
 
@@ -363,7 +374,7 @@ Events.on(engine, "collisionStart", (event) => {
         updateHighest();
       }
 
-      if (newBall === BALLS_BASE[7]) {
+      if (newBall === BALLS_BASE[10]) {
         numSuika += 1;
       }
 
@@ -375,8 +386,8 @@ Events.on(engine, "collisionStart", (event) => {
       (collision.bodyA.name === "topLine" || collision.bodyB.name === "topLine")
     ) {
       if (!switchCheckbox.checked && highestScore < score) {
-        await setDoc(doc(dbService, "scores", "UserID"), {
-          score,
+        await setDoc(doc(dbService, "scores", name), {
+          score: score,
         });
       }
       disableAction = true;
@@ -386,7 +397,7 @@ Events.on(engine, "collisionStart", (event) => {
 
     if (switchCheckbox.checked && numSuika === 1) {
       if (millisecond < fastestRecord) {
-        await setDoc(doc(dbService, "records", "UserID"), {
+        await setDoc(doc(dbService, "records", name), {
           record: millisecond,
         });
       }
