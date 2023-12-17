@@ -1,5 +1,5 @@
 import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
-import { BALLS_BASE } from "./balls";
+import { BALLS_BASE } from "../balls";
 import {
   dbService,
   collection,
@@ -10,7 +10,7 @@ import {
   setDoc,
   doc,
   getDoc,
-} from "./fbase";
+} from "../fbase";
 
 const name = localStorage.getItem("user");
 const nameElement = document.getElementById("userName");
@@ -138,7 +138,7 @@ const modeBar = document.querySelector(".modeBar");
 switchCheckbox.checked = localStorage.getItem("mode") === "true";
 
 const nextBall = () => {
-  nextElement.src = BALLS_BASE[nextIndex].name + ".png";
+  nextElement.src = "../" + BALLS_BASE[nextIndex].name + ".png";
 };
 
 const updateScore = () => {
@@ -217,7 +217,7 @@ const addBall = () => {
     index: index,
     isSleeping: true,
     render: {
-      sprite: { texture: `${ball.name}.png` },
+      sprite: { texture: `../${ball.name}.png` },
     },
     restitution: 0.3,
   });

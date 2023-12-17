@@ -13,7 +13,7 @@ document.getElementById("googleLogin")?.addEventListener("click", () => {
       localStorage.setItem("user", nickName);
       // IdP data available using getAdditionalUserInfo(result)
       // ...
-      window.location.href = "/home";
+      window.location.href = "/home/";
     })
     .catch((error) => {
       // Handle Errors here.

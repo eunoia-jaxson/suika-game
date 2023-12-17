@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import { authService } from "./fbase";
+import { authService } from "../fbase";
 
 document.getElementById("logout")?.addEventListener("click", () => {
   signOut(authService)
