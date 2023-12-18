@@ -69,6 +69,12 @@
         z-index: -1; /* 가상 요소를 실제 내용 뒤로 이동 */
       }
     </style>
+    <script>
+      const token = localStorage.getItem("token");
+      if (token !== null) {
+        window.location.href = "/home/";
+      }
+    </script>
     <script type="module" src="login.js"></script>
   </head>
   <body style="padding: 10px 20px">
