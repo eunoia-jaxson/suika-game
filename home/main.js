@@ -114,12 +114,19 @@ let millisecond = 0;
 let milliseconds = 0;
 let seconds = 0;
 let minutes = 0;
-const scoreSnap = await getDoc(doc(dbService, "scores", name));
-const highestScore =
-  scoreSnap.data() === undefined ? 0 : scoreSnap.data().score;
-const recordSnap = await getDoc(doc(dbService, "records", name));
-const fastestRecord =
-  recordSnap.data() === undefined ? 5999999 : recordSnap.data().record;
+let highestScore = 0;
+let fastestRecord = 5999999;
+async function fetchData() {
+  const scoreSnap = await getDoc(doc(dbService, "scores", name));
+  highestScore = scoreSnap.data() === undefined ? 0 : scoreSnap.data().score;
+  const recordSnap = await getDoc(doc(dbService, "records", name));
+  fastestRecord =
+    recordSnap.data() === undefined ? 5999999 : recordSnap.data().record;
+  updateHighest();
+  updateFastest();
+}
+
+fetchData();
 
 // 목표 위치의 요소를 가져옴
 const nextElement = document.getElementById("next");
@@ -361,7 +368,7 @@ Events.on(engine, "collisionStart", (event) => {
         collision.collision.supports[0].y,
         newBall.radius,
         {
-          render: { sprite: { texture: `${newBall.name}.png` } },
+          render: { sprite: { texture: `../${newBall.name}.png` } },
           index: index + 1,
         }
       );
@@ -416,7 +423,5 @@ toggleSwitch.addEventListener("click", function () {
 
 updateLabelContent();
 updateContentVisibility();
-updateHighest();
-updateFastest();
 nextBall();
 addBall();
