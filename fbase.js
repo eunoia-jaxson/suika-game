@@ -37,7 +37,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-logEvent(analytics, "notification_received");
 
 export const authService = getAuth(app);
 export const dbService = getFirestore(app);
@@ -54,4 +53,5 @@ export {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  analytics,
 };

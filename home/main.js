@@ -10,6 +10,7 @@ import {
   setDoc,
   doc,
   getDoc,
+  analytics,
 } from "../fbase";
 
 const name = localStorage.getItem("user");
@@ -278,6 +279,7 @@ window.onkeydown = (event) => {
       }
 
       if (switchCheckbox.checked) {
+        logEvent(analytics, "speedRunMode_played");
         if (isRunning) {
           return;
         } else {
@@ -285,6 +287,8 @@ window.onkeydown = (event) => {
         }
 
         isRunning = true;
+      } else {
+        logEvent(analytics, "scoreMode_played");
       }
       break;
 
@@ -326,6 +330,7 @@ window.onkeydown = (event) => {
       }
 
       if (switchCheckbox.checked) {
+        logEvent(analytics, "speedRunMode_played");
         if (isRunning) {
           return;
         } else {
@@ -333,6 +338,8 @@ window.onkeydown = (event) => {
         }
 
         isRunning = true;
+      } else {
+        logEvent(analytics, "scoreMode_played");
       }
       break;
   }
