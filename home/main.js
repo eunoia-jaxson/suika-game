@@ -66,41 +66,6 @@ if (localStorage.getItem("mode") === null) {
   localStorage.setItem("mode", "false");
 }
 
-getDocs(
-  query(collection(dbService, "scores"), orderBy("score", "desc"), limit(5))
-)
-  .then((querySnapshot) => {
-    querySnapshot.docs.forEach((doc, i) => {
-      const scoreElement = document.getElementById(`highScore-${i + 1}`);
-      scoreElement.textContent = `${i + 1}   |   ${doc.data().score}   |   ${
-        doc.id
-      }`;
-    });
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
-
-getDocs(query(collection(dbService, "records"), orderBy("record"), limit(5)))
-  .then((querySnapshot) => {
-    querySnapshot.docs.forEach((doc, i) => {
-      const scoreElement = document.getElementById(`highRecord-${i + 1}`);
-      const milliseconds = Math.floor((doc.data().record % 1000) / 10);
-      const minutes = Math.floor(doc.data().record / 1000 / 60);
-      const seconds = Math.floor((doc.data().record / 1000) % 60);
-      const record =
-        formatTime(minutes) +
-        ":" +
-        formatTime(seconds) +
-        "." +
-        formatTime(milliseconds);
-      scoreElement.textContent = `${i + 1}   |   ${record}   |   ${doc.id}`;
-    });
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
-
 let currentBody = null;
 let currentBall = null;
 let disableAction = false;
@@ -117,6 +82,42 @@ let minutes = 0;
 let highestScore = 0;
 let fastestRecord = 5999999;
 async function fetchData() {
+  await getDocs(
+    query(collection(dbService, "scores"), orderBy("score", "desc"), limit(5))
+  )
+    .then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc, i) => {
+        const scoreElement = document.getElementById(`highScore-${i + 1}`);
+        scoreElement.textContent = `${i + 1}   |   ${doc.data().score}   |   ${
+          doc.id
+        }`;
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+
+  await getDocs(
+    query(collection(dbService, "records"), orderBy("record"), limit(5))
+  )
+    .then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc, i) => {
+        const scoreElement = document.getElementById(`highRecord-${i + 1}`);
+        const milliseconds = Math.floor((doc.data().record % 1000) / 10);
+        const minutes = Math.floor(doc.data().record / 1000 / 60);
+        const seconds = Math.floor((doc.data().record / 1000) % 60);
+        const record =
+          formatTime(minutes) +
+          ":" +
+          formatTime(seconds) +
+          "." +
+          formatTime(milliseconds);
+        scoreElement.textContent = `${i + 1}   |   ${record}   |   ${doc.id}`;
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
   const scoreSnap = await getDoc(doc(dbService, "scores", name));
   highestScore = scoreSnap.data() === undefined ? 0 : scoreSnap.data().score;
   const recordSnap = await getDoc(doc(dbService, "records", name));
