@@ -274,18 +274,17 @@ window.onkeydown = (event) => {
         disableAction = false;
       }, 1000);
 
-      if (world.bodies.length === 6) {
+      if (world.bodies.length === 5) {
         modeBar.classList.add("disabled");
       }
 
       if (switchCheckbox.checked) {
-        logEvent(analytics, "speedRunMode_played");
         if (isRunning) {
           return;
         } else {
           setInterval(updateRecord, 10);
+          logEvent(analytics, "speedRunMode_played");
         }
-
         isRunning = true;
       } else {
         logEvent(analytics, "scoreMode_played");
@@ -330,13 +329,12 @@ window.onkeydown = (event) => {
       }
 
       if (switchCheckbox.checked) {
-        logEvent(analytics, "speedRunMode_played");
         if (isRunning) {
           return;
         } else {
           setInterval(updateRecord, 10);
+          logEvent(analytics, "speedRunMode_played");
         }
-
         isRunning = true;
       } else {
         logEvent(analytics, "scoreMode_played");
