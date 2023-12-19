@@ -11,6 +11,7 @@ import {
   doc,
   getDoc,
   analytics,
+  logEvent,
 } from "../fbase";
 
 const name = localStorage.getItem("user");

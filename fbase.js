@@ -54,4 +54,5 @@ export {
   signInWithPopup,
   signOut,
   analytics,
+  logEvent,
 };
