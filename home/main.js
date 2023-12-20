@@ -288,7 +288,11 @@ window.onkeydown = (event) => {
         }
         isRunning = true;
       } else {
-        logEvent(analytics, "scoreMode_played");
+        if (isRunning) {
+          return;
+        } else {
+          logEvent(analytics, "scoreMode_played");
+        }
       }
       break;
 
@@ -338,7 +342,11 @@ window.onkeydown = (event) => {
         }
         isRunning = true;
       } else {
-        logEvent(analytics, "scoreMode_played");
+        if (isRunning) {
+          return;
+        } else {
+          logEvent(analytics, "scoreMode_played");
+        }
       }
       break;
   }
