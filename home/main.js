@@ -284,14 +284,14 @@ window.onkeydown = (event) => {
           return;
         } else {
           setInterval(updateRecord, 10);
-          logEvent(analytics, "speedRunMode_played");
+          logEvent(analytics, "playing_speedRunMode");
         }
         isRunning = true;
       } else {
         if (isRunning) {
           return;
         } else {
-          logEvent(analytics, "scoreMode_played");
+          logEvent(analytics, "playing_scoreMode");
         }
       }
       break;
@@ -338,14 +338,14 @@ window.onkeydown = (event) => {
           return;
         } else {
           setInterval(updateRecord, 10);
-          logEvent(analytics, "speedRunMode_played");
+          logEvent(analytics, "playing_speedRunMode");
         }
         isRunning = true;
       } else {
         if (isRunning) {
           return;
         } else {
-          logEvent(analytics, "scoreMode_played");
+          logEvent(analytics, "playing_scoreMode");
         }
       }
       break;
