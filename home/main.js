@@ -284,16 +284,16 @@ window.onkeydown = (event) => {
           return;
         } else {
           setInterval(updateRecord, 10);
-          logEvent(analytics, "playing_speedRunMode");
+          logEvent(analytics, "speedRunMode");
         }
-        isRunning = true;
       } else {
         if (isRunning) {
           return;
         } else {
-          logEvent(analytics, "playing_scoreMode");
+          logEvent(analytics, "scoreMode");
         }
       }
+      isRunning = true;
       break;
 
     case "ArrowLeft":
@@ -338,16 +338,16 @@ window.onkeydown = (event) => {
           return;
         } else {
           setInterval(updateRecord, 10);
-          logEvent(analytics, "playing_speedRunMode");
+          logEvent(analytics, "speedRunMode");
         }
-        isRunning = true;
       } else {
         if (isRunning) {
           return;
         } else {
-          logEvent(analytics, "playing_scoreMode");
+          logEvent(analytics, "scoreMode");
         }
       }
+      isRunning = true;
       break;
   }
 };
