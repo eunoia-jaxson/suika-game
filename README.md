@@ -28,7 +28,7 @@
 ## 👥 개발자
 
 <br>
-||Frontend Developer|
+||Developer|
 |---:|:---:|
 |Image|<img src="https://github.com/seongju1015/image/assets/122343583/4e5a8f33-1152-48fa-8890-24834be3c7a6" alt="Jinseo" style="width:250px;">|
 |Name|<a href="https://github.com/eunoia-jason">김진서 (Jinseo Kim)</a>|
