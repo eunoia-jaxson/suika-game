@@ -31,5 +31,5 @@
 
 ||Developer|
 |---:|:---:|
-|Image|<img src="https://github.com/seongju1015/image/assets/122343583/4e5a8f33-1152-48fa-8890-24834be3c7a6" alt="Jinseo" style="width:250px;">|
+|Image|<img width="250" alt="프로필2" src="https://github.com/user-attachments/assets/44df2006-e570-42b5-8d39-40eb415ae054" />|
 |Name|<a href="https://github.com/eunoia-jason">김진서 (Jinseo Kim)</a>|
