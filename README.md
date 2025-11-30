@@ -32,4 +32,4 @@
 ||Developer|
 |---:|:---:|
 |Image|<img width="250" alt="프로필2" src="https://github.com/user-attachments/assets/44df2006-e570-42b5-8d39-40eb415ae054" />|
-|Name|<a href="https://github.com/eunoia-jason">김진서 (Jinseo Kim)</a>|
+|Name|<a href="https://github.com/eunoia-jaxson">김진서 (Jinseo Kim)</a>|
